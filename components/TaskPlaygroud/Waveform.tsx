@@ -11,6 +11,10 @@ const Waveform = ({ file }: Props) => {
         const TimelinePlugin = require("wavesurfer.js/dist/plugin/wavesurfer.timeline.min");
         wavesurfer.current = WaveSurfer.create({
           container: waveContainer.current,
+          barWidth: 1,
+          barHeight: 1,
+          waveColor: "#fc4d36",
+          progressColor: "#c83a22",
           plugins: [TimelinePlugin.create({
               container: waveTimelineContainer.current
           })]
