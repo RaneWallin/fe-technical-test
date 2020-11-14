@@ -26,7 +26,7 @@ const TaskPlayground = () => {
     <div className="bg-gray-200 rounded-lg p-8 flex flex-col md:ml-auto w-full my-10">
       <div className="container">
                   <span>Waveform</span>
-        { data && <Waveform file={data.audio.file} />  }
+        { data && <Waveform {...data.audio} />  }
       </div>
     </div>
   );
