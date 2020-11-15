@@ -25,25 +25,25 @@ const TaskPlayground = () => {
   let wavesurfer = React.createRef<Function>();
 
   return (
-    <div className="bg-gray-200 rounded-lg p-8 flex flex-col md:ml-auto w-full my-10">
-      <div className="container">
+    <div>
+      <div className="bg-gray-200 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10">
         { loading && "Loading..." }
         { data && <Waveform {...data.audio} wavesurfer={wavesurfer} />  }
-        { data && getAnnotations(data.audio.annotations, wavesurfer) }
         { error && "Unable to load data." }
       </div>
+      { data && getAnnotations(data.audio.annotations, wavesurfer) }
     </div>
   );
 };
 
 export default TaskPlayground;
 
-const getAnnotations = (annotations: Array<Object>, wavesurfer: React.RefObject<Function>) => {
-  return annotations.map((annotation, i) => 
+const getAnnotations = (annotations: Array<AnnotationObject>, wavesurfer: React.RefObject<Function>) => {
+  return annotations.map((annotation: AnnotationObject, i) => 
                             <Annotation {...annotation} id={i} wavesurfer={wavesurfer} key={i} />)
 }
 
-interface Annotation {
+interface AnnotationObject {
   startTime: String,
   endTime: String
 }

@@ -25,7 +25,7 @@ const Waveform = ({ file, annotations, wavesurfer }: Props) => {
 
         wavesurfer.current.load(file);
 
-        annotations.forEach(({ startTime, endTime }: Annotation) => {
+        annotations.forEach(({ startTime, endTime }: Annotation, i) => {
             wavesurfer.current.addRegion({
                 start: startTime,
                 end: endTime,
@@ -52,7 +52,7 @@ export default Waveform;
 interface Props {
     file: String,
     annotations: Array<Annotation>,
-    wavesurfer: React.RefObject<Function>
+    wavesurfer: React.RefObject<Object>
 }
 
 interface Annotation {
