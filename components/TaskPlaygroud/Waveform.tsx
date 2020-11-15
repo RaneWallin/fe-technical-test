@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
 
-const Waveform = ({ file }: Props) => {
+const Waveform = ({ file, annotations }: Props) => {
     const waveContainer = useRef(null);
     const waveTimelineContainer = useRef(null);
     let wavesurfer = useRef(null);
@@ -9,18 +9,34 @@ const Waveform = ({ file }: Props) => {
       useEffect(() => {
         const WaveSurfer = require("wavesurfer.js");
         const TimelinePlugin = require("wavesurfer.js/dist/plugin/wavesurfer.timeline.min");
+        const RegionsPlugin = require("wavesurfer.js/dist/plugin/wavesurfer.regions.min")
         wavesurfer.current = WaveSurfer.create({
           container: waveContainer.current,
           barWidth: 1,
           barHeight: 1,
           waveColor: "#fc4d36",
-          progressColor: "#c83a22",
-          plugins: [TimelinePlugin.create({
+          progressColor: "#c83a22", 
+          plugins: [
+            TimelinePlugin.create({
               container: waveTimelineContainer.current
-          })]
+            }),
+            RegionsPlugin.create()
+        ]
         });
 
         wavesurfer.current.load(file);
+
+        annotations.forEach(({ startTime, endTime }: Annotation) => {
+            wavesurfer.current.addRegion({
+                start: startTime,
+                end: endTime,
+                drag: false,
+                resize: false,
+                color: "rgba(0, 0, 0, 0.1)"
+            });
+        });
+
+        return () => wavesurfer.current.destroy();
       },[file]);
 
       return (
@@ -35,5 +51,11 @@ const Waveform = ({ file }: Props) => {
 export default Waveform;
 
 interface Props {
-    file: String
+    file: String,
+    annotations: Array<Annotation>,
+}
+
+interface Annotation {
+    startTime: String,
+    endTime: String
 }
