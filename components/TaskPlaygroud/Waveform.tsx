@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from "react";
 
 
-const Waveform = ({ file, annotations }: Props) => {
+const Waveform = ({ file, annotations, wavesurfer }: Props) => {
     const waveContainer = useRef(null);
     const waveTimelineContainer = useRef(null);
-    let wavesurfer = useRef(null);
     
       useEffect(() => {
         const WaveSurfer = require("wavesurfer.js");
@@ -53,6 +52,7 @@ export default Waveform;
 interface Props {
     file: String,
     annotations: Array<Annotation>,
+    wavesurfer: React.RefObject<Function>
 }
 
 interface Annotation {
